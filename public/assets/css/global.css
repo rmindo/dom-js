@@ -1,0 +1,32 @@
+
+#panel {
+    float: left;
+    color: #fff;
+    width: 150px;
+    height: 100%;
+    padding: 20px;
+    position: fixed;
+    background: #184667;
+}
+
+#panel ul {
+    margin: 0;
+    padding: 0;
+}
+#panel li {
+    padding: 10px;
+    list-style: none;
+}
+#panel li a {
+	color: #fff;
+	text-decoration: none;
+}
+#content {
+    padding: 20px;
+    margin: 0 0 0 190px;
+}
+#content textarea {
+    width: 600px;
+    height: 500px;
+    padding: 10px;
+}
