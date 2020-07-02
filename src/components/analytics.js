@@ -1,22 +1,17 @@
 class Analytics {
 
 	constructor() {
-
 		this.head.title('Analytics');
 	}
 
 
 	button(node) {
-
 		node.id = 'button';
-
 		node.innerHTML = 'Click to see the world!';
 	}
 
 
-
 	content() {
-
 		return {
 			h1: 'Analytics',
 			p: [
