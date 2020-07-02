@@ -29,27 +29,24 @@ class Campaigns {
 
 
 	send() {
-
 		const data = {
-            fn: 'f07',
-            data: {
-                user: {
-                    ui: 2,
-                    dn: 1
-                },
-                load: {
-                    limit: 5
-                }
-            }
-        };
-
+      fn: 'f07',
+      data: {
+        user: {
+          ui: 2,
+          dn: 1
+        },
+        load: {
+          limit: 5
+        }
+      }
+    };
 		return this.app.fetch(data);
 	}
 
 
 
 	content($) {
-
 		return {
 			h1: 'Campaigns',
 			div: [
@@ -91,11 +88,11 @@ class Campaigns {
 							});
 
 							$.value = '<div style="width:100%;max-width:600px;margin:0 auto;padding:20px;border:1px solid #ddd">'+
-									'<h2 style="margin: 0 0 20px;">7 new Full Stack Developer jobs in Remote</h2>'+
-									'<div>'+
-									'<h4 style="margin:0 0 10px;line-height: 10px;">Software Test Engineer</h4>'+
-									'<p style="margin:0 0 10px;line-height: 10px;"><small>Jumpcut</small></p>'+
-									'<p style="margin:0 0 10px;line-height: 10px;">2 year’s experience as a Test Engineer doing full-time automation.</p></div></div>'
+                '<h2 style="margin: 0 0 20px;">7 new Full Stack Developer jobs in Remote</h2>'+
+                '<div>'+
+                '<h4 style="margin:0 0 10px;line-height: 10px;">Software Test Engineer</h4>'+
+                '<p style="margin:0 0 10px;line-height: 10px;"><small>Jumpcut</small></p>'+
+                '<p style="margin:0 0 10px;line-height: 10px;">2 year’s experience as a Test Engineer doing full-time automation.</p></div></div>'
 
 							$.pick('preview').put($.value);
 						}

@@ -8,7 +8,6 @@ class App {
 
 
 	constructor() {
-
 		app = this;
 
 		this.head.link('/assets/css/reset.css', 'reset');
@@ -20,20 +19,18 @@ class App {
 	fetch(data) {
 
 		return fetch(`http://localhost:100/app/v1/services`, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer M0z3JJk2OUTjVMlTNh20IJ0gZoDzAJ0vYdmGMb0hNdjChIjsZADjAL54ZAjDFNk3MYzTIN2zZYjTYN5xOAGiMO4nZAWHMeylMd2CII1sMEmDYIy6ZcDSQaz1NdTCQI2sZIjDdIk6NcjiVbmkZdDCIIxsZEDDEIy6YczCUdx1YdgyTe'
-            }
-
-        }).then((r) => r.json());
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer M0z3JJk2OUTjVMlTNh20IJ0gZoDzAJ0vYdmGMb0hNdjChIjsZADjAL54ZAjDFNk3MYzTIN2zZYjTYN5xOAGiMO4nZAWHMeylMd2CII1sMEmDYIy6ZcDSQaz1NdTCQI2sZIjDdIk6NcjiVbmkZdDCIIxsZEDDEIy6YczCUdx1YdgyTe'
+      }
+    }).then((r) => r.json());
 	}
 
 
 
 	panel($) {
-
 		return {
 			ul: {
 				li: [

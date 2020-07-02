@@ -6,22 +6,18 @@
 class Segments {
 
 	constructor() {
-
 		this.head.title('Segments');
 	}
 
 
 	button(node) {
-
 		node.id = 'button';
-
 		node.innerHTML = 'Click to see the world!';
 	}
 
 
 
 	content($) {
-
 		$.setAttribute('id', 'content');
 
 		return {

@@ -1,12 +1,11 @@
 // Styles
-import styles from './Styles/Dashboard';
+import styles from '../assets/styles/Dashboard';
 
 
 
 class Dashboard {
 
 	constructor() {
-	
 		this.head.css(styles);
 		this.head.title('Dashboard');
 	}
@@ -15,7 +14,6 @@ class Dashboard {
 
 	button($) {
 		$.set({test: false, show: false});
-
 
 		$.att({
 			id: 'submit',

@@ -1,5 +1,5 @@
 // Styles
-import styles from './Styles/Users';
+import styles from '../assets/styles/Users';
 
 
 
@@ -7,11 +7,9 @@ import styles from './Styles/Users';
 class Users {
 
 	constructor(app) {
-
 		this.app = app;
 
 		this.head.title('Users');
-
 		this.head.css(styles);
 		this.head.script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
 	}
@@ -19,20 +17,18 @@ class Users {
 
 
 	records() {
-
 		const data = {
-            fn: 'f07',
-            data: {
-                user: {
-                    ui: 2,
-                    dn: 1
-                },
-                load: {
-                    limit: 5
-                }
-            }
-        };
-
+      fn: 'f07',
+      data: {
+        user: {
+          ui: 2,
+          dn: 1
+        },
+        load: {
+          limit: 5
+        }
+      }
+    };
 		return this.app.fetch(data);
 	}
 
@@ -42,18 +38,14 @@ class Users {
 
 		return {
 			h1: ($) => {
-
 				if($.get('test')) {
 					
 					// $.put(' List');
-
 					$.put({
 						i: 'List of Users'
 					});
 
 					// $.put('List of Contact');
-
-
 					
 					// $.append(' List');
 
@@ -68,7 +60,6 @@ class Users {
 					// 	i: 'List of '
 					// });
 
-					
 					// return 'List of Users';
 
 					// return {
@@ -98,23 +89,23 @@ class Users {
 					class: 'records'
 				});
 
-		    	for(let i in r.result) {
-		    		let item = r.result[i];
+        for(let i in r.result) {
+          let item = r.result[i];
 
-		    		if(item.hasOwnProperty('email')) {
-			    		o.push({
-			    			td: [
-			    				item['email'],
-			    				item['query'],
-			    				item['type'],
-			    				item['locality']['location'],
-			    				item['locality']['country']
-			    			]
-			    		});
-			    	}
-		    	}
+          if(item.hasOwnProperty('email')) {
+            o.push({
+              td: [
+                item['email'],
+                item['query'],
+                item['type'],
+                item['locality']['location'],
+                item['locality']['country']
+              ]
+            });
+          }
+        }
 
-		    	return {
+        return {
 					thead: ($) => {
 
 						$.att({
@@ -139,9 +130,8 @@ class Users {
 			button: ($) => {
 
 				$.on('click', (e) => {
-		        	$.set({test: true});
+		      $.set({test: true});
 				});
-
 				return 'View More';
 			}
 		};

@@ -1,25 +1,25 @@
-import dom from '../Markup';
+import dom from './dom';
 
 // Components
-import App from './components/app';
-import Users from './components/users';
-import Forms from './components/forms';
-import Reports from './components/reports';
-import Segments from './components/segments';
-import Dashboard from './components/dashboard';
-import Analytics from './components/analytics';
-import Campaigns from './components/campaigns';
-import Automations from './components/automations';
+import app from './src/app';
+import users from './src/views/users';
+import forms from './src/views/forms';
+import reports from './src/views/reports';
+import segments from './src/views/segments';
+import dashboard from './src/views/dashboard';
+import analytics from './src/views/analytics';
+import campaigns from './src/views/campaigns';
+import automations from './src/views/automations';
 
 
-dom.set('/', Dashboard);
-dom.set('/users', Users);
-dom.set('/forms', Forms);
-dom.set('/reports', Reports);
-dom.set('/segments', Segments);
-dom.set('/analytics', Analytics);
-dom.set('/campaigns', Campaigns);
-dom.set('/automations', Automations);
+dom.set('/', dashboard);
+dom.set('/users', users);
+dom.set('/forms', forms);
+dom.set('/reports', reports);
+dom.set('/segments', segments);
+dom.set('/analytics', analytics);
+dom.set('/campaigns', campaigns);
+dom.set('/automations', automations);
 
 
-dom.run('container', App);
+dom.run('container', app);

@@ -1,22 +1,17 @@
 class Automations {
 
 	constructor() {
-
 		this.head.title('Automations');
 	}
 
 
 	button(node) {
-
 		node.id = 'button';
-
 		node.innerHTML = 'Click to see the world!';
 	}
 
 
-
 	content() {
-
 		return {
 			h1: 'Automations',
 			p: [
