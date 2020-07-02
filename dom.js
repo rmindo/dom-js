@@ -2,13 +2,11 @@ const ids = {};
 const DOM = {};
 const state = {};
 const routes = [];
-const layout = [];
 const genIDs = [];
 const classes = {};
 const DOMkeeper = {};
 
 const head = document.head;
-const links = document.links;
 const location = window.location;
 
 
@@ -17,38 +15,38 @@ const location = window.location;
 * Create Element
 */
 const ce = (name) => {
-	return document.createElement(name);
+  return document.createElement(name);
 }
 
 /**
 * Create Text Node
 */
 const ct = (text) => {
-	return document.createTextNode(text);
+  return document.createTextNode(text);
 }
 
 /**
 * Get Element by ID
 */
 const gi = (name) => {
-	return document.getElementById(name);
+  return document.getElementById(name);
 }
 
 /**
 * Get Element by Class
 */
 const gc = (name) => {
-	return document.getElementsByClassName(name);
+  return document.getElementsByClassName(name);
 }
 
 /**
 * Clear node
 */
 const cl = (node) => {
-	if(typeof node == 'object') {
-		node.innerHTML = '';
-	}
-	return node;
+  if(typeof node == 'object') {
+    node.innerHTML = '';
+  }
+  return node;
 }
 
 
@@ -56,14 +54,14 @@ const cl = (node) => {
 * Create ID
 */
 const cid = (length) => {
-	
-   var r = '';
-   var c = 'abcdefghijklmnopqrstuvwxyz';
 
-   for(let i = 0; i < length; i++) {
-      r += c.charAt(Math.floor(Math.random() * c.length));
-   }
-   return r;
+  var r = '';
+  var c = 'abcdefghijklmnopqrstuvwxyz';
+
+  for(let i = 0; i < length; i++) {
+    r += c.charAt(Math.floor(Math.random() * c.length));
+  }
+  return r;
 };
 
 
@@ -72,17 +70,13 @@ const cid = (length) => {
 */
 const set = (ins, type) => {
 
-	var proto = ins.prototype;
+  var proto = ins.prototype;
 
-
-	proto.head = HTMLHead(ins, type);
-
-	proto.node = (name) => {
-		 return DOM.Node(name);
-	};
-
-
-	return ins;
+  proto.head = HTMLHead(ins, type);
+  proto.node = (name) => {
+    return DOM.Node(name);
+  };
+  return ins;
 }
 
 
@@ -93,26 +87,27 @@ const set = (ins, type) => {
 */
 const map = (app, path) => {
 
-	// Reset state
-	for(let i in state) {
-		delete state[i];
-	}
-	// Remove unwanted node in the head
-	for(let i in genIDs) {
-		if(head.children.hasOwnProperty(genIDs[i])) {
-			head.children[genIDs[i]].remove();	
-		}
-	}
+  // Reset state
+  for(let i in state) {
+    delete state[i];
+  }
+  // Remove unwanted node in the head
+  for(let i in genIDs) {
+    if(head.children.hasOwnProperty(genIDs[i])) {
+      head.children[genIDs[i]].remove();	
+    }
+  }
 
-	for(let i in routes) {
-		let route = routes[i];
-		if(path.replace('#', '') == route.path) {
-			var app = new app;
-			DOM.module = new route.module(app);
-			DOM.createDOM(app, DOM.module);
-			return true;
-		}
-	}
+  for(let i in routes) {
+    let route = routes[i];
+
+    if(path.replace('#', '') == route.path) {
+      var app = new app;
+      DOM.module = new route.module(app);
+      DOM.createDOM(app, DOM.module);
+      return true;
+    }
+  }
 }
 
 
@@ -122,13 +117,13 @@ const map = (app, path) => {
 */
 const load = (app) => {
 
-	if(location.hash) {
-		map(app, location.hash);
-	} else {
-		if(map(app, '#/')) {
-			location.replace('#/');
-		}
-	}
+  if(location.hash) {
+    map(app, location.hash);
+  } else {
+    if(map(app, '#/')) {
+      location.replace('#/');
+    }
+  }
 }
 
 
@@ -141,68 +136,68 @@ const load = (app) => {
 */
 const HTMLHead = (ins, type) => {
 
-	const DOMHead = {
-		node: (name, att, data = null) => {
-			var node = DOM.Node(name, att);
+  const DOMHead = {
+    node: (name, att, data = null) => {
+      var node = DOM.Node(name, att);
 
-			if(att.id == null) {
-				node.id = cid(5);
-			}
+      if(att.id == null) {
+        node.id = cid(5);
+      }
 
-			if(type == 'module') {
-				genIDs.push(node.id);
-			}
+      if(type == 'module') {
+        genIDs.push(node.id);
+      }
 
-			if(typeof head.children[node.id] == 'undefined') {
-				if(data) {
-					if(typeof data == 'function') {
-						var value = data(node);
-					}
-					head.appendChild(value);
-				} else {
-					head.appendChild(node);
-				}
-			}
-		},
-		css: (style, id = null) => {
+      if(typeof head.children[node.id] == 'undefined') {
+        if(data) {
+          if(typeof data == 'function') {
+            var value = data(node);
+          }
+          head.appendChild(value);
+        } else {
+          head.appendChild(node);
+        }
+      }
+    },
+    css: (style, id = null) => {
+      DOMHead.node('style', {id, type: 'text/css'}, (node) => {
+        var css = '';
 
-			DOMHead.node('style', {id, type: 'text/css'}, (node) => {
+        for(let n in style) {
+          var prop = '';
 
-				var css = '';
-				for(let n in style) {
-					var prop = '';
-					for(let i in style[n]) {
-						let v = String(style[n][i]).replace(/;/g,'');
-						prop += `${i}:${v};`;
-					}
-					css += `${n}{${prop}}`;
-				}
-				node.appendChild(ct(css));
+          for(let i in style[n]) {
+            let v = String(style[n][i]).replace(/;/g,'');
+            prop += `${i}:${v};`;
+          }
+          css += `${n}{${prop}}`;
+        }
+        node.appendChild(ct(css));
 
-				return node;
-			});
-		},
-		link: (value, id = null) => {
-			DOMHead.node('link', {
-				id: id,
-				type: 'text/css',
-				rel: 'stylesheet',
-				href: value,
-			});
-		},
-		script: (value, id = null) => {
-			DOMHead.node('script', {
-				id: id,
-				type: 'text/javascript',
-				src: value
-			});
-		},
-		title: (value) => {
-			document.title = value;
-		}
-	};
+        return node;
+      });
+    },
+    link: (value, id = null) => {
+      DOMHead.node('link', {
+        id: id,
+        type: 'text/css',
+        rel: 'stylesheet',
+        href: value,
+      });
+    },
+    script: (value, id = null) => {
+      DOMHead.node('script', {
+        id: id,
+        type: 'text/javascript',
+        src: value
+      });
+    },
+    title: (value) => {
+      document.title = value;
+    }
+  };
 
-	return DOMHead;
+  return DOMHead;
 };
 
 
@@ -212,120 +207,119 @@ const HTMLHead = (ins, type) => {
 */
 const DOMMethods = {
 
-	set: (node) => {
+  set: (node) => {
 
-		// Set Default state
-		node.state = false;
-
-
-		node.on = (name, callback) => {
-			node[`on${name}`] = (e) => {
-				callback.call(DOM.module, e);
-				if(node.state) {
-					DOM.UpdateDOM(e);
-				}
-			};
-		};
+    // Set Default state
+    node.state = false;
 
 
-		node.get = (name) => {
-			return state[name];
-		};
+    node.on = (name, callback) => {
+      node[`on${name}`] = (e) => {
+        callback.call(DOM.module, e);
+        if(node.state) {
+          DOM.UpdateDOM(e);
+        }
+      };
+    };
 
 
-		node.set = (object) => {
-			for(let i in object) {
-				state[i] = object[i];
-			}
-			node.state = object;
-		};
+    node.get = (name) => {
+      return state[name];
+    };
 
 
-		node.att = (att) => {
-			var cls = [];
-			for(let i in att) {
-				if(i == 'id') {
-					ids[att[i]] = node;
-				} else {
-					if(i == 'class') {
-						if(typeof classes[att[i]] !== 'undefined') {
-							classes[att[i]].push(node);	
-						} else {
-							cls.push(node);
-							classes[att[i]] = cls;	
-						}
-					}
-				}
-				node.setAttribute(i, att[i]);
-			}
-		};
+    node.set = (object) => {
+      for(let i in object) {
+        state[i] = object[i];
+      }
+      node.state = object;
+    };
 
 
-		node.css = (object) => {
-			var css = '';
-			for(let i in object) {
-				let val = String(object[i]).replace(/;/g,'');
-				css += `${i}:${val};`;
-			}
-			node.setAttribute('style', css);
-		};
+    node.att = (att) => {
+      var cls = [];
+
+      for(let i in att) {
+        if(i == 'id') {
+          ids[att[i]] = node;
+        } else {
+          if(i == 'class') {
+            if(typeof classes[att[i]] !== 'undefined') {
+              classes[att[i]].push(node);	
+            } else {
+              cls.push(node);
+              classes[att[i]] = cls;	
+            }
+          }
+        }
+        node.setAttribute(i, att[i]);
+      }
+    };
 
 
-		node.put = (data, clear = null) => {
-
-			if(clear == null) {
-				node = cl(node);
-			}
-			DOM.DigIn(node, data);
-		};
-
-
-		node.pick = (name, callback) => {
-
-			var match = name.match(/\.(\w+)/i);
-
-			if(Array.isArray(match)) {
-				let items = classes[match[1]];
-				for(let i in items) {
-					if(callback) {
-						callback(DOMMethods.set(items[i]));
-					}
-				}
-			} else {
-				var el = DOMMethods.set(ids[name]);
-
-				if(callback) {
-					return callback(el);
-				}
-				return el;
-			}
-		};
+    node.css = (object) => {
+      var css = '';
+      for(let i in object) {
+        let val = String(object[i]).replace(/;/g,'');
+        css += `${i}:${val};`;
+      }
+      node.setAttribute('style', css);
+    };
 
 
-		node.route = (href, name) => {
+    node.put = (data, clear = null) => {
 
-			node.on('click', (e) => {
-				e.preventDefault();
-				if(map(DOM.Base, e.target.hash)) {
-					location.replace(e.target.hash);
-				}
-			});
-			node.appendChild(ct(name));
-			node.setAttribute('href', href);
-		};
+      if(clear == null) {
+        node = cl(node);
+      }
+      DOM.DigIn(node, data);
+    };
 
 
-		node.append = (data) => {
-			node.put(data, true);
-		};
+    node.pick = (name, callback) => {
+      var match = name.match(/\.(\w+)/i);
+
+      if(Array.isArray(match)) {
+        let items = classes[match[1]];
+        for(let i in items) {
+          if(callback) {
+            callback(DOMMethods.set(items[i]));
+          }
+        }
+      } else {
+        var el = DOMMethods.set(ids[name]);
+        if(callback) {
+          return callback(el);
+        }
+        return el;
+      }
+    };
 
 
-		node.prepend = async (data) => {
-			DOM.DigIn(node, data, true);
-		};
+    node.route = (href, name) => {
 
-		return node;
-	}
+      node.on('click', (e) => {
+        e.preventDefault();
+        if(map(DOM.Base, e.target.hash)) {
+          location.replace(e.target.hash);
+        }
+      });
+      node.appendChild(ct(name));
+      node.setAttribute('href', href);
+    };
+
+
+    node.append = (data) => {
+      node.put(data, true);
+    };
+
+
+    node.prepend = async (data) => {
+      DOM.DigIn(node, data, true);
+    };
+
+    return node;
+  }
 }
 
 
@@ -336,12 +330,12 @@ const DOMMethods = {
 */
 DOM.Node = (name, att = {}) => {
 
-	var node = DOMMethods.set(ce(name));
+  var node = DOMMethods.set(ce(name));
 
-	if(typeof node.att !== 'undefined') {
-		node.att(att);
-	}
-	return node;
+  if(typeof node.att !== 'undefined') {
+    node.att(att);
+  }
+  return node;
 }
 
 
@@ -351,80 +345,78 @@ DOM.Node = (name, att = {}) => {
 */
 DOM.DigIn = async (node, data, prepend = null) => {
 
-	// Stop if no data
-	if(typeof data == 'undefined') {
-		return;
-	} else {
-		
-		// Clear content for new node
-		if(node.hasChildNodes()) {
-			var node = cl(node);
-		}
+  // Stop if no data
+  if(typeof data == 'undefined') {
+    return;
+  } else {
 
-		// Add to DOM
-		var add = async (node, data) => {
+    // Clear content for new node
+    if(node.hasChildNodes()) {
+      var node = cl(node);
+    }
 
-			if(prepend) {
-				node.insertBefore(data, node.firstChild);
-			} else {
-				node.appendChild(data);
-			}
-		}
+    // Add to DOM
+    var add = async (node, data) => {
 
-		// Dig down to the last object
-		var nested = async (tag, data) => {
-			// Create node object
-			const node = DOM.Node(tag);
+      if(prepend) {
+        node.insertBefore(data, node.firstChild);
+      } else {
+        node.appendChild(data);
+      }
+    }
 
-			if(typeof data == 'function') {
+    // Dig down to the last object
+    var nested = async (tag, data) => {
+      // Create node object
+      const node = DOM.Node(tag);
 
-				var func = data;
-				var data = func.call(DOM.module, node);
-				
-				if(data) {
-					if(data instanceof Promise) {
-						DOM.DigIn(node, await data.then(r => r));
-					} else {
-						DOM.DigIn(node, data);
-					}
-				}
-				DOM.AddToDOMKeeper(node, func);
-			} else {
-				DOM.DigIn(node, data);
-			}
+      if(typeof data == 'function') {
+        var func = data;
+        var data = func.call(DOM.module, node);
 
-			return node;
-		}
+        if(data) {
+          if(data instanceof Promise) {
+            DOM.DigIn(node, await data.then(r => r));
+          } else {
+            DOM.DigIn(node, data);
+          }
+        }
+        DOM.AddToDOMKeeper(node, func);
+      } else {
+        DOM.DigIn(node, data);
+      }
+      return node;
+    }
 
 
-		if(Array.isArray(data)) {
-			for(let i in data) {
-				if(typeof data[i] == 'string') {
-					add(node, ct(data[i]));
-				} else {
-					add(node, await nested(node.localName, data[i]));
-				}
-			}
-		} else {
-			if(typeof data == 'object') {
-				for(let name in data) {
-					if(Array.isArray(data[name])) {
-						for(let i in data[name]) {
-							add(node, await nested(name, data[name][i]));
-						}
-					} else {
-						let dom = await nested(name, data[name]);
-						if(dom) {
-							add(node, dom);
-						}
-					}
-				}
-			} else {
-				node.innerHTML = data;
-			}
-		}
-		return node;
-	}
+    if(Array.isArray(data)) {
+      for(let i in data) {
+        if(typeof data[i] == 'string') {
+          add(node, ct(data[i]));
+        } else {
+          add(node, await nested(node.localName, data[i]));
+        }
+      }
+    } else {
+      if(typeof data == 'object') {
+        for(let name in data) {
+          if(Array.isArray(data[name])) {
+            for(let i in data[name]) {
+              add(node, await nested(name, data[name][i]));
+            }
+          } else {
+            let dom = await nested(name, data[name]);
+            if(dom) {
+              add(node, dom);
+            }
+          }
+        }
+      } else {
+        node.innerHTML = data;
+      }
+    }
+    return node;
+  }
 }
 
 
@@ -435,40 +427,40 @@ DOM.DigIn = async (node, data, prepend = null) => {
 */
 DOM.createDOM = async (app, mod) => {
 
-	// Clear before adding
-	var root = cl(DOM.Root);
+  // Clear before adding
+  var root = cl(DOM.Root);
 
-	if(typeof app[root.id] == 'function') {
+  if(typeof app[root.id] == 'function') {
 
-		app.obj = {};
+    app.obj = {};
 
-		app.dump = (name) => {
+    app.dump = (name) => {
 
-			if(typeof app[name] == 'function') {
-				app.obj[name] = app[name];
-			} else if(typeof mod[name] == 'function') {
-				app.obj[name] = mod[name];
-			}
-			return name;
-		}
+      if(typeof app[name] == 'function') {
+        app.obj[name] = app[name];
+      } else if(typeof mod[name] == 'function') {
+        app.obj[name] = mod[name];
+      }
+      return name;
+    }
 
-		for(let i in (cont = app[root.id].call(app))) {
+    for(let i in (cont = app[root.id].call(app))) {
 
-			let tag = Object.keys(cont[i])[0];
-			let name = cont[i][tag];
+      let tag = Object.keys(cont[i])[0];
+      let name = cont[i][tag];
 
-			if(typeof name == 'string') {
-				let node = DOM.Node(tag, {id: name});
+      if(typeof name == 'string') {
+        let node = DOM.Node(tag, {id: name});
 
-				if(typeof app.obj[name] !== 'undefined') {
-					DOM.DigIn(node, app.obj[name].call(mod, node));
-				}
-				root.appendChild(node);
-			} else {
-				// throw Error('Nested object is not allowed.');
-			}
-		}
-	}
+        if(typeof app.obj[name] !== 'undefined') {
+          DOM.DigIn(node, app.obj[name].call(mod, node));
+        }
+        root.appendChild(node);
+      } else {
+      // throw Error('Nested object is not allowed.');
+      }
+    }
+  }
 }
 
 
@@ -478,36 +470,36 @@ DOM.createDOM = async (app, mod) => {
 */
 DOM.AddToDOMKeeper = (node, call) => {
 
-	if(typeof call == 'function') {
+  if(typeof call == 'function') {
 
-		var str = call.toString();
-		var str = str.replace(/(\/\/.*)/g, '');
-		var str = str.replace(/(^\s*\n)/gm, '');
-		var arr = str.match(/.get\((?:'|")(\w+)(?:'|")\)/g);
+    var str = call.toString();
+    var str = str.replace(/(\/\/.*)/g, '');
+    var str = str.replace(/(^\s*\n)/gm, '');
+    var arr = str.match(/.get\((?:'|")(\w+)(?:'|")\)/g);
 
-		for(let i in arr) {
-			if((match = arr[i].match(/(?:'|")(\w+)(?:'|")/i))) {
-				node.call = call;
-				DOMkeeper[match[1]] = node;
-			}
-		}
+    for(let i in arr) {
+      if((match = arr[i].match(/(?:'|")(\w+)(?:'|")/i))) {
+        node.call = call;
+        DOMkeeper[match[1]] = node;
+      }
+    }
 
 
-		/**
-		* Update DOM
-		*/
-		DOM.UpdateDOM = (e) => {
+    /**
+    * Update DOM
+    */
+    DOM.UpdateDOM = (e) => {
 
-			for(let i in state) {
-				let node = DOMkeeper[i];
-				let data = node.call.call(DOM.module, node);
-				if(data) {
-					DOM.DigIn(cl(node), data);
-				}
-				node.removeAttribute('style');
-			}
-		}
-	}
+      for(let i in state) {
+        let node = DOMkeeper[i];
+        let data = node.call.call(DOM.module, node);
+        if(data) {
+          DOM.DigIn(cl(node), data);
+        }
+        node.removeAttribute('style');
+      }
+    }
+  }
 }
 
 
@@ -517,12 +509,12 @@ DOM.AddToDOMKeeper = (node, call) => {
 * Export module
 */
 module.exports = {
-	run: (name, base) => {
-		DOM.Root = gi(name);
-		DOM.Base = set(base, 'base');
-		load(DOM.Base);
-	},
-	set: (path, module) => {
-		routes.push({path, module: set(module, 'module')});
-	}
+  run: (name, base) => {
+    DOM.Root = gi(name);
+    DOM.Base = set(base, 'base');
+    load(DOM.Base);
+  },
+  set: (path, module) => {
+    routes.push({path, module: set(module, 'module')});
+  }
 }
