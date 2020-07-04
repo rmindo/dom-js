@@ -6,18 +6,17 @@ import styles from '../assets/styles/Users';
 // class Users extends Layout {
 class Users {
 
-	constructor(app) {
-		this.app = app;
+  constructor(app) {
+    this.app = app;
 
-		this.head.title('Users');
-		this.head.css(styles);
-		this.head.script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
-	}
+    this.head.title('Users');
+    this.head.css(styles);
+    this.head.script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
+  }
 
 
-
-	records() {
-		const data = {
+  records() {
+    const data = {
       fn: 'f07',
       data: {
         user: {
@@ -29,65 +28,59 @@ class Users {
         }
       }
     };
-		return this.app.fetch(data);
-	}
+    return this.app.fetch(data);
+  }
 
 
 
-	content($) {
+  content($) {
 
-		return {
-			h1: ($) => {
-				if($.get('test')) {
-					
-					// $.put(' List');
-					$.put({
-						i: 'List of Users'
-					});
+    return {
+      h1: ($) => {
+        if($.get('test')) {
+          // $.put(' List');
+          $.put({
+            i: 'List of Users'
+          });
 
-					// $.put('List of Contact');
-					
-					// $.append(' List');
+          // $.put('List of Contact');
+          // $.append(' List');
+          // $.append({
+          // 	i: ' List'
+          // });
 
-					// $.append({
-					// 	i: ' List'
-					// });
+          // $.prepend('List of ');
+          // $.prepend({
+          // 	i: 'List of '
+          // });
 
+          // return 'List of Users';
 
-					// $.prepend('List of ');
+          // return {
+          // 	i: 'List of Users'
+          // };
 
-					// $.prepend({
-					// 	i: 'List of '
-					// });
+          // return {
+          // 	span: ($) => {
+          // 		return {
+          // 			i: 'List of Users'
+          // 		};
+          // 	}
+          // }
+        } else {
 
-					// return 'List of Users';
+          $.put({
+            i: 'Users'
+          });
+        }
+      },
+      table: async ($, o = []) => {
+        const r = await this.records();
 
-					// return {
-					// 	i: 'List of Users'
-					// };
-
-					// return {
-					// 	span: ($) => {
-					// 		return {
-					// 			i: 'List of Users'
-					// 		};
-					// 	}
-					// }
-				} else {
-
-					$.put({
-						i: 'Users'
-					});
-				}
-			},
-			table: async ($, o = []) => {
-
-				const r = await this.records();
-
-				$.att({
-					id: 'list',
-					class: 'records'
-				});
+        $.att({
+          id: 'list',
+          class: 'records'
+        });
 
         for(let i in r.result) {
           let item = r.result[i];
@@ -106,36 +99,35 @@ class Users {
         }
 
         return {
-					thead: ($) => {
+          thead: ($) => {
 
-						$.att({
-							id: 'thead'
-						});
+            $.att({
+            id: 'thead'
+            });
 
-						return {
-							tr: {
-								th: [
-									'Email',
-									'Query',
-									'Schedule',
-									'City',
-									'Country'
-								]
-							}
-						}
-					},
-					tbody: {tr: o}
-				};
-			},
-			button: ($) => {
-
-				$.on('click', (e) => {
-		      $.set({test: true});
-				});
-				return 'View More';
-			}
-		};
-	}
+            return {
+              tr: {
+                th: [
+                  'Email',
+                  'Query',
+                  'Schedule',
+                  'City',
+                  'Country'
+                ]
+              }
+            }
+          },
+          tbody: {tr: o}
+        };
+      },
+      button: ($) => {
+        $.on('click', (e) => {
+          $.set({test: true});
+        });
+        return 'View More';
+      }
+    };
+  }
 }
 
 
