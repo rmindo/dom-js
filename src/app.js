@@ -23,7 +23,7 @@ class App {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer M0z3JJk2OUTjVMlTNh20IJ0gZoDzAJ0vYdmGMb0hNdjChIjsZADjAL54ZAjDFNk3MYzTIN2zZYjTYN5xOAGiMO4nZAWHMeylMd2CII1sMEmDYIy6ZcDSQaz1NdTCQI2sZIjDdIk6NcjiVbmkZdDCIIxsZEDDEIy6YczCUdx1YdgyTe'
+        'Authorization': process.env.API_ACCESS_TOKEN
       }
     }).then((r) => r.json());
   }
